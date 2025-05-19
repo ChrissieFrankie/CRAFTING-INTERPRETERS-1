@@ -16,7 +16,16 @@ typedef struct DLL // doubly linked list
     unsigned long long length; 
 } DLL;
 
-Node* createNode(char* str)
+DLL* newDLL() // creates and returns a DLL
+{
+    DLL* doublyLinkedList = (DLL*)(malloc(sizeof(DLL)));
+    doublyLinkedList->head = NULL;
+    doublyLinkedList->tail = NULL;
+    doublyLinkedList->length = 0;
+    return doublyLinkedList;
+}
+
+Node* createNode(char* str) // creates and returns a Node
 {
     Node* node = (Node*)(malloc(sizeof(Node))); // allocate memory for node
     int strLength = strlen(str);
@@ -58,6 +67,7 @@ void print(Node** doublyLinkedList) // print all strings in the list
 
 int main(void)
 {
+    DLL* dll = newDLL();
     Node* doublyLinkedList = NULL;
     insert(&doublyLinkedList, "Doubly");
     insert(&doublyLinkedList, "Linked");
