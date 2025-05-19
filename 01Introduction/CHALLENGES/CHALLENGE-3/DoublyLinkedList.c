@@ -2,12 +2,19 @@
 #include <string.h>
 #include <stdio.h>
 
-typedef struct Node 
+typedef struct Node // doubly linked list element
 {
     char* str;
     struct Node* prev;
     struct Node* next;
 } Node;
+
+typedef struct DLL // doubly linked list
+{
+    struct Node* head;
+    struct Node* tail;
+    unsigned long long length; 
+} DLL;
 
 Node* createNode(char* str)
 {
