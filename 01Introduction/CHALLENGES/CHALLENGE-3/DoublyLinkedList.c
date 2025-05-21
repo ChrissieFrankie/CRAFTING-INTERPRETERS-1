@@ -122,6 +122,41 @@ void findString(DLL *doublyLinkedList, char* targetStr)
     fprintf(stderr, "%s OUT OF BOUNDS", targetStr);
 }
 
+void deleteIndex(DLL *doublyLinkedList, unsigned long long int targetIndex)
+{
+    unsigned long long int index = 0;
+    Node* currentElement = doublyLinkedList->head;
+    while (currentElement != NULL) // iterate through list
+    {
+        if (index == targetIndex)
+        {
+            if (index == 0) // first element
+            {
+                doublyLinkedList->head = currentElement->next;
+                doublyLinkedList->head->prev = NULL;
+                free(currentElement);
+            }
+            else if (index == (doublyLinkedList->length - 1)) // last element
+            {
+                doublyLinkedList->tail = currentElement->prev;
+                doublyLinkedList->tail->prev = NULL;
+                free(currentElement);
+            }
+            else // element in between
+            {
+                Node* temp = currentElement->prev;
+                currentElement->next->prev = temp;
+                temp->next = currentElement->next;
+                free(currentElement);
+            }
+            doublyLinkedList->length -= 1;
+            return;
+        }
+        index += 1;
+        currentElement = currentElement->next;
+    }
+}
+
 int main(void) // finally got some descent sleep, sorry for the wait
 {
     DLL *dll = NULL;
@@ -130,8 +165,9 @@ int main(void) // finally got some descent sleep, sorry for the wait
     insert(&dll, "Doubly");
     insert(&dll, "Linked");
     insert(&dll, "List");
+    deleteIndex(dll, 1);
+    deleteIndex(dll, 1);
     printf("%llu\n", dll->length);
-    //find(dll, (unsigned long long int)5);
-    findString(dll, "potato");
+    print(dll);
     return 0;
 }
