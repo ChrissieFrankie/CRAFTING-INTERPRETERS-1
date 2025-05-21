@@ -105,21 +105,19 @@ char* findElementWithIndex(DLL *doublyLinkedList, unsigned long long int targetI
     return NULL;
 }
 
-unsigned long long int findString(DLL *doublyLinkedList, char* targetStr) // find the element in a doubly linked list given the string
+unsigned long long int findIndexWithString(DLL *doublyLinkedList, char* targetStr) // find the element in a doubly linked list given the string
 {
     unsigned long long int index = 0;
     Node* currentElement = doublyLinkedList->head;
-    while (currentElement != NULL)
+    while (currentElement != NULL) // iterate through list
     {
         if (strcmp(currentElement->str, targetStr) == 0)
         {
-            printf("%s FOUND AT INDEX %llu\n", currentElement->str, index);
             return index;
         }
         index += 1;
         currentElement = currentElement->next;
     }
-    fprintf(stderr, "%s OUT OF BOUNDS", targetStr);
     return -1;    
 }
 
