@@ -13,7 +13,7 @@ typedef struct DLL // doubly linked list
 {
     struct Node* head;
     struct Node* tail;
-    unsigned long long length; 
+    unsigned long long int length; 
 } DLL;
 
 DLL* newDLL() // creates and returns a DLL
@@ -90,7 +90,28 @@ void printReverse(DLL* doublyLinkedList) // print all strings in the list starti
     }
 }
 
-int main(void)
+void find(DLL* doublyLinkedList, unsigned long long int targetIndex) // find the element in a doubly linked list given the index
+{
+    unsigned long long int dllLength = doublyLinkedList->length; 
+    if (doublyLinkedList->length <= targetIndex) // catch index out of bounds
+    {
+        fprintf(stderr, "INDEX %d OUT OF BOUNDS FOR LENGTH %d\n", targetIndex, dllLength);
+    }
+    unsigned long long int currentIndex = 0; // iterate through list to find index
+    Node* currentElement = doublyLinkedList->head;
+    while (currentElement != NULL)
+    {
+        if (currentIndex == targetIndex)
+        {
+            printf("%s FOUND AT INDEX %d\n", currentElement->str, targetIndex);
+            break;
+        }
+        currentIndex++;
+        currentElement = currentElement->next;
+    }
+}
+
+int main(void) // finally got some descent sleep, sorry for the wait
 {
     DLL* dll = NULL;
     insert(&dll, "Creating");
@@ -100,5 +121,6 @@ int main(void)
     insert(&dll, "List");
     printReverse(dll);
     printf("%d\n", dll->length);
+    find(dll, 2);
     return 0;
 }
