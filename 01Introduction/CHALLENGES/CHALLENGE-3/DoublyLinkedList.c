@@ -85,7 +85,7 @@ void printReverse(DLL *doublyLinkedList) // print all strings in the list starti
     }
 }
 
-void findIndex(DLL *doublyLinkedList, unsigned long long int targetIndex) // find the element in a doubly linked list given the index
+char* findElementWithIndex(DLL *doublyLinkedList, unsigned long long int targetIndex) // find the element in a doubly linked list given the index
 {
     if (doublyLinkedList->length <= targetIndex) // catch index out of bounds
     {
@@ -97,12 +97,12 @@ void findIndex(DLL *doublyLinkedList, unsigned long long int targetIndex) // fin
     {
         if (currentIndex == targetIndex)
         {
-            printf("%s FOUND AT INDEX %llu\n", currentElement->str, targetIndex);
-            break;
+            return currentElement->str;
         }
         currentIndex++;
         currentElement = currentElement->next;
     }
+    return NULL;
 }
 
 unsigned long long int findString(DLL *doublyLinkedList, char* targetStr) // find the element in a doubly linked list given the string
@@ -174,6 +174,7 @@ int main(void) // finally got some descent sleep, sorry for the wait
     insert(&dll, "List");
     deleteIndex(dll, 1);
     deleteIndex(dll, 1);
+    printf("%s\n", findElementWithIndex(dll, 1));
     printf("%llu\n", dll->length);
     deleteString(dll, "Linked");
     print(dll);
