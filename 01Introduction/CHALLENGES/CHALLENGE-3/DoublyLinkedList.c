@@ -25,7 +25,7 @@ DLL* newDLL() // creates and returns a DLL
     return doublyLinkedList;
 }
 
-Node* createNode(char* str) // creates and returns a Node
+Node* newNode(char* str) // creates and returns a Node
 {
     Node* node = (Node*)(malloc(sizeof(Node))); // allocate memory for node
     int strLength = strlen(str);
@@ -36,28 +36,43 @@ Node* createNode(char* str) // creates and returns a Node
     return node;
 }
 
-void insert(Node** doublyLinkedList, char* str) // inserts a string to the doubly linked list
+void insert(DLL** doublyLinkedList, char* str) // inserts a string to the doubly linked list
 {
-    if ((*doublyLinkedList) == NULL) // if the doubly linked list is null
+    if ((*doublyLinkedList) == NULL) // there's no such thing
     {
-        *doublyLinkedList = createNode(str); // create initial node
+        printf("DOUBLY LINKED LIST DOESN'T EXIST!\n"); // warn user
+        printf("CREATING DOUBLY LINKED LIST!\n");
+        *doublyLinkedList = newDLL(); // create the doubly linked list
+        insert(doublyLinkedList, str); // try again
     }
-    else // doubly linked list is not null
+    else // there's such thing
     {
-        Node* current = *doublyLinkedList;
-        while (current->next != NULL) // current is not null
+        Node* node = newNode(str); // create new node
+        if ((*doublyLinkedList)->head == NULL && (*doublyLinkedList)->tail == NULL && (*doublyLinkedList)->length == 0) // there's no items
         {
-            current = current->next; // find the end
+            (*doublyLinkedList)->head = node; // add single item
+            (*doublyLinkedList)->tail = node;
         }
-        Node* newNode = createNode(str); // the new node
-        current->next = newNode; // new node comes after current node
-        newNode->prev = current; // current node comes before new node
+        else if ((*doublyLinkedList)->head == (*doublyLinkedList)->tail && (*doublyLinkedList)->length == 1) // there's a single item
+        {
+            (*doublyLinkedList)->head->next = node;
+            node->prev = (*doublyLinkedList)->head;
+            (*doublyLinkedList)->tail = node;
+        }
+        else if ((*doublyLinkedList)->head != (*doublyLinkedList)->tail && (*doublyLinkedList)->length >= 2) // there are two or more items
+        {
+            (*doublyLinkedList)->tail->next = node;
+            node->prev = (*doublyLinkedList)->tail;
+            (*doublyLinkedList)->tail = node;
+        }
+        (*doublyLinkedList)->length += 1; // increase length of list
     }
+    
 }
 
-void print(Node** doublyLinkedList) // print all strings in the list
+void print(DLL* doublyLinkedList) // print all strings in the list
 {
-    Node* current = *doublyLinkedList;
+    Node* current = doublyLinkedList->head;
     while (current != NULL)
     {
         printf("%s ", current->str);
@@ -67,11 +82,13 @@ void print(Node** doublyLinkedList) // print all strings in the list
 
 int main(void)
 {
-    DLL* dll = newDLL();
-    Node* doublyLinkedList = NULL;
-    insert(&doublyLinkedList, "Doubly");
-    insert(&doublyLinkedList, "Linked");
-    insert(&doublyLinkedList, "List");
-    print(&doublyLinkedList);
+    DLL* dll = NULL;
+    insert(&dll, "Creating");
+    insert(&dll, "a");
+    insert(&dll, "Doubly");
+    insert(&dll, "Linked");
+    insert(&dll, "List");
+    print(dll);
+    printf("%d\n", dll->length);
     return 0;
 }
