@@ -70,13 +70,23 @@ void insert(DLL** doublyLinkedList, char* str) // inserts a string to the doubly
     
 }
 
-void print(DLL* doublyLinkedList) // print all strings in the list
+void print(DLL* doublyLinkedList) // print all strings in the list starting from the head
 {
     Node* current = doublyLinkedList->head;
     while (current != NULL)
     {
         printf("%s ", current->str);
         current = current->next;
+    }
+}
+
+void printReverse(DLL* doublyLinkedList) // print all strings in the list starting from the tail
+{
+    Node* current = doublyLinkedList->tail;
+    while (current != NULL)
+    {
+        printf("%s ", current->str);
+        current = current->prev;
     }
 }
 
@@ -88,7 +98,7 @@ int main(void)
     insert(&dll, "Doubly");
     insert(&dll, "Linked");
     insert(&dll, "List");
-    print(dll);
+    printReverse(dll);
     printf("%d\n", dll->length);
     return 0;
 }
