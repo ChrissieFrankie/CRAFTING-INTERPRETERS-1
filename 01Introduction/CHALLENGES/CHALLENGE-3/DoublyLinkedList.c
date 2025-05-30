@@ -42,6 +42,18 @@ void freeNode(Node *node) // frees a node
     free(node);
 }
 
+void freeDLL(DLL *doublyLinkedList) // frees a doubly linked list
+{
+    Node* head = doublyLinkedList->head;
+    while (head != NULL) // iterative doesn't cause stack overflow
+    {
+        Node *temp = head; // save the current head     
+        head = head->next; // move to the next node
+        freeNode(temp); // free the current head
+    }
+    free(doublyLinkedList);
+}
+
 void insert(DLL **doublyLinkedList, char *str) // inserts a string to the doubly linked list
 {
     if ((*doublyLinkedList) == NULL) // there's no such thing
@@ -182,5 +194,6 @@ int main(void) // finally got some descent sleep, sorry for the wait
     printf("%llu\n", dll->length);
     deleteString(dll, "Linked");
     print(dll);
+    freeDLL(dll);
     return 0;
 }
