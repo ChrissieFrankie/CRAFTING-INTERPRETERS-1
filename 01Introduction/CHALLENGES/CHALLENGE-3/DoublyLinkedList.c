@@ -36,13 +36,19 @@ Node *newNode(char *str) // creates and returns a Node
     return node;
 }
 
+void freeNode(Node *node) // frees a node
+{
+    free(node->str);
+    free(node);
+}
+
 void insert(DLL **doublyLinkedList, char *str) // inserts a string to the doubly linked list
 {
     if ((*doublyLinkedList) == NULL) // there's no such thing
     {
         printf("DOUBLY LINKED LIST DOESN'T EXIST!\n"); // warn user
         printf("CREATING DOUBLY LINKED LIST!\n");
-        *doublyLinkedList = newDLL();  // create the doubly linked list
+        *doublyLinkedList = newDLL(); // create the doubly linked list
     }
     Node *node = newNode(str);                                                                                      // create new node
     if ((*doublyLinkedList)->head == NULL && (*doublyLinkedList)->tail == NULL && (*doublyLinkedList)->length == 0) // there's no items
@@ -85,7 +91,7 @@ void printReverse(DLL *doublyLinkedList) // print all strings in the list starti
     }
 }
 
-char* findStringWithIndex(DLL *doublyLinkedList, unsigned long long int targetIndex) // find the element in a doubly linked list given the index
+char *findStringWithIndex(DLL *doublyLinkedList, unsigned long long int targetIndex) // find the element in a doubly linked list given the index
 {
     if (doublyLinkedList->length <= targetIndex) // catch index out of bounds
     {
@@ -105,10 +111,10 @@ char* findStringWithIndex(DLL *doublyLinkedList, unsigned long long int targetIn
     return NULL;
 }
 
-unsigned long long int findIndexWithString(DLL *doublyLinkedList, char* targetStr) // find the element in a doubly linked list given the string
+unsigned long long int findIndexWithString(DLL *doublyLinkedList, char *targetStr) // find the element in a doubly linked list given the string
 {
     unsigned long long int index = 0;
-    Node* currentElement = doublyLinkedList->head;
+    Node *currentElement = doublyLinkedList->head;
     while (currentElement != NULL) // iterate through list
     {
         if (strcmp(currentElement->str, targetStr) == 0)
@@ -118,13 +124,13 @@ unsigned long long int findIndexWithString(DLL *doublyLinkedList, char* targetSt
         index += 1;
         currentElement = currentElement->next;
     }
-    return -1;    
+    return -1;
 }
 
 void deleteIndex(DLL *doublyLinkedList, unsigned long long int targetIndex) // delete the element in a doubly linked list given the index
 {
     unsigned long long int index = 0;
-    Node* currentElement = doublyLinkedList->head;
+    Node *currentElement = doublyLinkedList->head;
     while (currentElement != NULL) // iterate through list
     {
         if (index == targetIndex)
@@ -143,7 +149,7 @@ void deleteIndex(DLL *doublyLinkedList, unsigned long long int targetIndex) // d
             }
             else // element in between
             {
-                Node* temp = currentElement->prev;
+                Node *temp = currentElement->prev;
                 currentElement->next->prev = temp;
                 temp->next = currentElement->next;
                 free(currentElement);
@@ -156,7 +162,7 @@ void deleteIndex(DLL *doublyLinkedList, unsigned long long int targetIndex) // d
     }
 }
 
-void deleteString(DLL *doublyLinkedList, char* targetStr) // delete the element in a doubly linked list given the string
+void deleteString(DLL *doublyLinkedList, char *targetStr) // delete the element in a doubly linked list given the string
 {
     unsigned long long int index = findIndexWithString(doublyLinkedList, targetStr);
     deleteIndex(doublyLinkedList, index);
