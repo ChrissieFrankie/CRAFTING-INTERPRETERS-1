@@ -47,8 +47,8 @@ void freeDLL(DLL *doublyLinkedList) // frees a doubly linked list
     Node* head = doublyLinkedList->head;
     while (head != NULL) // iterative doesn't cause stack overflow
     {
-        Node *temp = head; // save the current head     
-        head = head->next; // move to the next node
+        Node *temp = head; // (save the current head     
+        head = head->next; // )move to the next node
         freeNode(temp); // free the current head
     }
     free(doublyLinkedList);
@@ -151,20 +151,20 @@ void deleteIndex(DLL *doublyLinkedList, unsigned long long int targetIndex) // d
             {
                 doublyLinkedList->head = currentElement->next;
                 doublyLinkedList->head->prev = NULL;
-                free(currentElement);
+                freeNode(currentElement);
             }
             else if (index == (doublyLinkedList->length - 1)) // last element
             {
                 doublyLinkedList->tail = currentElement->prev;
                 doublyLinkedList->tail->prev = NULL;
-                free(currentElement);
+                freeNode(currentElement);
             }
             else // element in between
             {
                 Node *temp = currentElement->prev;
                 currentElement->next->prev = temp;
                 temp->next = currentElement->next;
-                free(currentElement);
+                freeNode(currentElement);
             }
             doublyLinkedList->length -= 1;
             return;
